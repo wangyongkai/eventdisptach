@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+
+    <com.test.touch.MyLinearLayout3
+        android:id="@+id/lin3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    </com.test.touch.MyLinearLayout3>
+
+    <com.test.touch.MyLinearLayout1
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+
+        <com.test.touch.MyLinearLayout2
+            android:id="@+id/lin2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            tools:context=".MainActivity">
+
+            <com.test.touch.MyButton2
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MyButton2"/>
+        </com.test.touch.MyLinearLayout2>
+
+
+    </com.test.touch.MyLinearLayout1>
+
+
+    <com.test.touch.MyButton1
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="MyButton1"/>
+
+
+</FrameLayout>
+
+
