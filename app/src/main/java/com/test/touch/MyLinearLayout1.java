@@ -1,6 +1,8 @@
 package com.test.touch;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,20 +26,22 @@ public class MyLinearLayout1 extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.v(TAG, "onInterceptTouchEvent" + "  event=" + ev.toString());
+        Log.v(TAG, "onInterceptTouchEvent" + "  event=" + ev.actionToString(ev.getAction()));
 //        boolean flag = super.onInterceptTouchEvent(ev);
 //        Log.v(TAG+getId(), "onInterceptTouchEvent=flag=:" + flag);
 //        return flag;
         boolean flag = super.onInterceptTouchEvent(ev);
-        Log.v(TAG, "flag=" + flag + "onInterceptTouchEvent" + " after  super.onInterceptTouchEvent(ev)");
-        return true;
+        Log.v(TAG, "flag=" + flag + "   onInterceptTouchEvent" + " after  super.onInterceptTouchEvent(ev)");
+        return flag;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.v(TAG, "onTouchEvent" + "event=" + event.toString());
+        Log.v(TAG, "onTouchEvent" + "event=" + event.actionToString(event.getAction()));
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -56,18 +60,19 @@ public class MyLinearLayout1 extends LinearLayout {
         // Log.v(TAG+getId(), "onTouchEvent=flag=:" + flag + "  event=" + event.toString());
         //return flag;
         boolean flag = super.onTouchEvent(event);
-        Log.v(TAG, "flag=" + flag + "onTouchEvent" + "after super.onTouchEvent(event)");
-        return true;
+        Log.v(TAG, "flag=" + flag + "  onTouchEvent" + "after super.onTouchEvent(event)");
+        return flag;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.v(TAG, "dispatchTouchEvent" + "  event=" + ev.toString());
+        Log.v(TAG, "dispatchTouchEvent" + "  event=" + ev.actionToString(ev.getAction()));
 //        boolean flag = super.dispatchTouchEvent(ev);
 //        Log.v(TAG+getId(), "dispatchTouchEvent=flag=:" + flag);
 //        return flag;
         boolean flag = super.dispatchTouchEvent(ev);
-        Log.v(TAG, "flag=" + flag + "dispatchTouchEvent after super.dispatchTouchEvent(ev)");
+        Log.v(TAG, "flag=" + flag + "  dispatchTouchEvent after super.dispatchTouchEvent(ev)");
         return flag;
     }
 

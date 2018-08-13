@@ -1,7 +1,9 @@
 package com.test.touch;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,9 +30,10 @@ public class MyButton2 extends Button {
         super(context, attrs, defStyleAttr);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.v(TAG, "onTouchEvent" + "  event=" + event.toString());
+        Log.v(TAG, "onTouchEvent" + "  event=" + event.actionToString(event.getAction()));
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -46,15 +49,16 @@ public class MyButton2 extends Button {
                 break;
         }
         boolean flag = super.onTouchEvent(event);
-        Log.v(TAG, "flag=" + flag + "onTouchEvent after  super.onTouchEvent(event)");
+        Log.v(TAG, "flag=" + flag + "  onTouchEvent after  super.onTouchEvent(event)");
         return flag;
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.v(TAG, "dispatchTouchEvent" + "  event=" + ev.toString());
-        boolean flag = super.dispatchTouchEvent(ev);
-        Log.v(TAG, "flag=" + flag + "dispatchTouchEvent after super.dispatchTouchEvent(ev)");
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.v(TAG, "dispatchTouchEvent" + "  event=" + event.actionToString(event.getAction()));
+        boolean flag = super.dispatchTouchEvent(event);
+        Log.v(TAG, "flag=" + flag + "  dispatchTouchEvent after super.dispatchTouchEvent(event)");
         return flag;
     }
 
