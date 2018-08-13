@@ -60,7 +60,7 @@ import android.view.View;
  * <p>
  * <p>
  * 怎么样让最底层的lin3响应事件？
- * 将lin1的dispatchTouchEvent方法return false即可 点击btn2 action4  ？？？？？？？？？？？？？
+ * 将lin1的dispatchTouchEvent方法return false即可 点击btn2 action4
  * <p>
  * **************************************************************************************************************
  * <p>
@@ -84,7 +84,7 @@ import android.view.View;
  * * dispatchTouchEvent用来寻找哪个view的ontouchevent方法消耗事件。
  * 找到lin2消耗down事件，则up事件传递到lin2的dispatchTouchEvent方法时直接调用ontouch方法消耗up.
  * 但上层的每层传递依然跟之前一样dispatchTouchEvent-onInterceptTouchEvent。并没有up事件直接传递给lin2
- * 子dispatchTouchEvent如果返回一个false 表明自己不消耗事件
+ * view的dispatchTouchEvent如果返回一个false 表明自己不消耗事件 即使自己的子view想消耗也不行！！！！！！
  * <p>
  * <p>
  * 0.一层view的事件其实都是在一个方法中完成dispatchTouchEvent。这个方法会调用本层的onInterceptTouchEvent或者onTouchEvent。
