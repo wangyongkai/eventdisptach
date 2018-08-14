@@ -73,7 +73,7 @@ public class MyLinearLayout1 extends LinearLayout {
 //        return flag;
         boolean flag = super.dispatchTouchEvent(ev);
         Log.v(TAG, "flag=" + flag + "  dispatchTouchEvent after super.dispatchTouchEvent(ev)");
-        return false;
+        return flag;
     }
 
     @Override

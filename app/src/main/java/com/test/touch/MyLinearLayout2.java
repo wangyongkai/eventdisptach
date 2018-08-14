@@ -62,7 +62,7 @@ public class MyLinearLayout2 extends LinearLayout {
         //return flag;
         boolean flag = super.onTouchEvent(event);
         Log.v(TAG, "flag=" + flag + "  onTouchEvent" + "after super.onTouchEvent(event)");
-        return flag;
+        return false;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

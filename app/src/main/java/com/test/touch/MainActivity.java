@@ -10,40 +10,6 @@ import android.view.View;
 
 
 /**
- * ************************************************************************************************************
- * 案例：
- * l3 l2 的onTouchEvent方法均返回false 表示不响应该事件  那么点击l2 到底谁来影响？
- * 首先点击的点落在l2内，能够响应的有activity l3 l1 l2三个view.
- * 如果l1也返回false 那只能返回给activity去响应了
- * <p>
- * 08-13 15:29:46.412 30810-30810/com.test.touch V/MainActivity: dispatchTouchEvent  event=ACTION_DOWN
- * ============================================================================                                                     *
- * 08-13 15:29:46.412 30810-30810/com.test.touch V/MyLinearLayout1: dispatchTouchEvent  event=ACTION_DOWN                             *
- * onInterceptTouchEvent  event=ACTION_DOWN                                                                                           *
- * flag=false   onInterceptTouchEvent after  super.onInterceptTouchEvent(ev)
- * ============================================================================
- * 08-13 15:29:46.412 30810-30810/com.test.touch V/MyLinearLayout2: dispatchTouchEvent  event=ACTION_DOWN
- * onInterceptTouchEvent  event=ACTION_DOWN
- * flag=falseonInterceptTouchEvent after  super.onInterceptTouchEvent(ev)
- * onTouchEventevent=ACTION_DOWN
- * flag=true  onTouchEventafter super.onTouchEvent(event)
- * flag=false  dispatchTouchEvent after super.dispatchTouchEvent(ev)
- * ============================================================================
- * 08-13 15:29:46.412 30810-30810/com.test.touch V/MyLinearLayout1: onTouchEventevent=ACTION_DOWN
- * flag=true  onTouchEventafter super.onTouchEvent(event)
- * flag=true  dispatchTouchEvent after super.dispatchTouchEvent(ev)
- * ============================================================================
- * 08-13 15:29:46.412 30810-30810/com.test.touch V/MainActivity: flag=true  dispatchTouchEvent after super.dispatchTouchEvent(event)
- * ============================================================================
- * 08-13 15:29:46.531 30810-30810/com.test.touch V/MainActivity: dispatchTouchEvent  event=ACTION_UP
- * <p>
- * 08-13 15:29:46.531 30810-30810/com.test.touch V/MyLinearLayout1: dispatchTouchEvent  event=ACTION_UP
- * onTouchEventevent=ACTION_UP
- * flag=true  onTouchEventafter super.onTouchEvent(event)
- * 08-13 15:29:46.532 30810-30810/com.test.touch V/MyLinearLayout1: flag=true  dispatchTouchEvent after super.dispatchTouchEvent(ev)
- * <p>
- * 08-13 15:29:46.532 30810-30810/com.test.touch V/MainActivity: flag=true  dispatchTouchEvent after super.dispatchTouchEvent(event)
- * 08-13 15:29:46.532 30810-30810/com.test.touch V/MyLinearLayout1: OnClick
  * <p>
  * *************************************************************************************************************
  * <p>
@@ -81,11 +47,23 @@ import android.view.View;
  * <p>
  * <p>
  * 总结：
- * * dispatchTouchEvent用来寻找哪个view的ontouchevent方法消耗事件。
- * 找到lin2消耗down事件，则up事件传递到lin2的dispatchTouchEvent方法时直接调用ontouch方法消耗up.
- * 但上层的每层传递依然跟之前一样dispatchTouchEvent-onInterceptTouchEvent。并没有up事件直接传递给lin2
- * view的dispatchTouchEvent如果返回一个false 表明自己不消耗事件 即使自己的子view想消耗也不行！！！！！！
+ * #########################################################################################################################
+ * 总体过程：
+ * 1.找到事件消耗者？
+ * 父类dispatchTouchEvent先调用父类的onInterceptTouchEvent方法，如果return false 说明不拦截，要分发给子类，父类调用子类的dispatchTouchEvent
+ * 子类再按照这个规则循环调用。直到onTouchEvent return true 说明找到事件消耗者，开始一层层往上super调用dispatchTouchEvent 并return true.
+ * 事件本应该子类消费，但是如果onTouchEvent return false 也就是子类不想消费，子类dispatchTouchEvent返回false给父类。此时，父类会调用本层的onTouchEvent
+ * 去消耗事件。因为事件最应该子类去消耗，如果不想消耗，次最应该消耗就是父类。
  * <p>
+ * 2.后续事件直接传递给事件消耗者。
+ * 后续事件在事件消耗者view层级会dispatchTouchEvent直接调用onTouchEvent
+ * 在view层级的上几个层级，依然会跟之前一样调用dispatchTouchEvent-onInterceptTouchEvent
+ * #########################################################################################################################
+ * 问题：
+ * 谁该参与事件消耗？
+ * 应该是遵循点击落在谁的区域内，谁在最上层。
+ * #########################################################################################################################
+ * 注意点：
  * <p>
  * 0.一层view的事件其实都是在一个方法中完成dispatchTouchEvent。这个方法会调用本层的onInterceptTouchEvent或者onTouchEvent。
  * <p>
@@ -99,11 +77,13 @@ import android.view.View;
  * dispatchTouchEvent方法中会调用本层的onTouchEvent方法。
  * <p>
  * <p>
- * 4.事件都是从dispatchTouchEvent中进行分发。无论消耗前后。
+ * 4.onInterceptTouchEvent只负责是否把事件交由本层处理，ontouchevent返回值才最终决定了dispatchTouchEvent的返回值。
  * <p>
  * <p>
  * 5.只有那些点击点落在其内的view才会有机会去响应事件 如果不在其内  不参与事件分发。例如我只点击了activity根布局的范围，那么布局上的其他view不参与事
  * 件。会直接调用activity的onTouchEvent去消耗事件
+ * <p>
+ * 6.view的dispatchTouchEvent如果返回一个false 表明自己不消耗事件 即使自己的子view想消耗也不行！！！！！！
  */
 
 
