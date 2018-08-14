@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 
 /**
@@ -106,6 +107,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mLin1 = (MyLinearLayout1) findViewById(R.id.lin1);
         mLin1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +162,16 @@ public class MainActivity extends Activity {
         });*/
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
+        for (int i = 0; i < view.getChildCount(); i++) {
+            View child = view.getChildAt(i);
+            Log.d(TAG2, "child" + i + "=   " + child.getClass().getSimpleName());
+        }
+
+    }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
