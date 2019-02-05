@@ -1,5 +1,6 @@
 package com.test.touch;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
@@ -106,6 +107,7 @@ public class MainActivity extends Activity {
     private static final String TAG5 = "MyButton2";
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,6 +165,23 @@ public class MainActivity extends Activity {
                 return false;
             }
         });*/
+
+
+        mBtn2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.d("MyButton2", "MyButton2------onTouch");
+                return false;
+            }
+        });
+
+        mBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("MyButton2", "MyButton2------onClick");
+            }
+        });
+
     }
 
     @Override
