@@ -51,8 +51,10 @@ import android.view.ViewGroup;
  * #########################################################################################################################
  * 总体过程：
  * 1.找到事件消耗者？
- * 父类dispatchTouchEvent先调用父类的onInterceptTouchEvent方法，如果return false 说明不拦截，要分发给子类，父类调用子类的dispatchTouchEvent
- * 子类再按照这个规则循环调用。直到onTouchEvent return true 说明找到事件消耗者，开始一层层往上super调用dispatchTouchEvent 并return true.
+ * 父类dispatchTouchEvent先调用父类的onInterceptTouchEvent方法，如果return false 说明不拦截，不拦截就没必要执行onTouchEvent。要分发给子类，
+ * 然后父类调用子类的dispatchTouchEvent。子类如果是viewgroup
+ * 则继续调用该层的onInterceptTouchEvent方法如果return false 说明不拦截，继续调用下一层子类的dispatchTouchEvent。
+ * 子类再按照这个规则循环调用。直到onTouchEvent return true 说明找到事件消耗者，开始一层层往上super调用dispatchTouchEvent 告诉父类dispatchTouchEvent要return true.
  * 事件本应该子类消费，但是如果onTouchEvent return false 也就是子类不想消费，子类dispatchTouchEvent返回false给父类。此时，父类会调用本层的onTouchEvent
  * 去消耗事件。因为事件最应该子类去消耗，如果不想消耗，次最应该消耗就是父类。
  * <p>
@@ -71,7 +73,7 @@ import android.view.ViewGroup;
  * 1.所有view默认设置，遵循点击谁谁响应，如果多层叠加，最上面的响应(这些建立在view必须有处理事件的能力，实现onclick接口等，没有吃事件的能力是不行的)
  * <p>
  * <p>
- * 2.dispatchTouchEvent用来拦截是否向和本层平级的下一层传递  onInterceptTouchEvent用来拦截是否向本层内的子view传递
+ * 2.dispatchTouchEvent用来告诉父类本层的view是否消耗这个事件  onInterceptTouchEvent用来拦截是否向本层内的子view传递
  * <p>
  * <p>
  * 3.找到消耗事件view前，dispatchTouchEvent方法中会调用本层的onInterceptTouchEvent方法。找到消耗事件view后，
