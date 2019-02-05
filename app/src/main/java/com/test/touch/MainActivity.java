@@ -51,7 +51,8 @@ import android.view.ViewGroup;
  * #########################################################################################################################
  * 总体过程：
  * 1.找到事件消耗者？
- * 父类dispatchTouchEvent先调用父类的onInterceptTouchEvent方法，如果return false 说明不拦截，不拦截就没必要执行onTouchEvent。要分发给子类，
+ * 父类dispatchTouchEvent先调用父类的onInterceptTouchEvent方法如果return true则交给本层的onTouchEvent。 如果return false 说明不拦截，
+ * 不拦截就没必要执行onTouchEvent。要分发给子类，
  * 然后父类调用子类的dispatchTouchEvent。子类如果是viewgroup
  * 则继续调用该层的onInterceptTouchEvent方法如果return false 说明不拦截，继续调用下一层子类的dispatchTouchEvent。
  * 子类再按照这个规则循环调用。直到onTouchEvent return true 说明找到事件消耗者，开始一层层往上super调用dispatchTouchEvent 告诉父类dispatchTouchEvent要return true.
