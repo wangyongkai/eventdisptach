@@ -78,8 +78,8 @@ import android.view.ViewGroup;
  * 2.dispatchTouchEvent用来告诉父类本层的view是否消耗这个事件  onInterceptTouchEvent用来拦截是否向本层内的子view传递
  * <p>
  * <p>
- * 3.找到消耗事件view前，dispatchTouchEvent方法中会调用本层的onInterceptTouchEvent方法。找到消耗事件view后，
- * dispatchTouchEvent方法中会调用本层的onTouchEvent方法。
+ * 3.找到消耗事件view前，dispatchTouchEvent方法中会调用本层的onInterceptTouchEvent方法。找到消耗事件view后，如果这个view是个viewgroup
+ * dispatchTouchEvent方法中会调用本层的onTouchEvent方法而不调用onInterceptTouchEvent
  * <p>
  * <p>
  * 4.onInterceptTouchEvent只负责是否把事件交由本层处理，ontouchevent返回值才最终决定了dispatchTouchEvent的返回值。
