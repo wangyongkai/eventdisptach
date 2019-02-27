@@ -98,6 +98,15 @@ import android.view.ViewGroup;
  *
  *
  * 9.super.onTouchEvent(event)的功能是 onclick方法实现。
+ *
+ *
+ * 简单总结
+ 我们可以发现这里，
+ 默认是return false， 不拦截
+ 也就是说如果是直接extends ViewGroup，
+ return super.onInterceptTouchEvent(ev)
+ 就是 return false
+ 表示 不拦截
  */
 
 
