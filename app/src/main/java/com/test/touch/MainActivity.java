@@ -94,7 +94,7 @@ import android.view.ViewGroup;
  * 7.如果该消耗事件的view没有消耗事件，那么则交给他的父view消耗。
  *
  *
- * 8.super.dispatchTouchEvent(ev)两个功能：将事件分发给子类和调用本层的onInterceptTouchEvent。如果不用super则这两个功能无法实现。
+ * 8.super.dispatchTouchEvent(ev)两个功能：将事件分发给子类和调用本层的onInterceptTouchEvent/onTouchEvent。如果不用super则这两个功能无法实现。
  *
  *
  * 9.super.onTouchEvent(event)的功能是 onclick方法实现。
@@ -107,6 +107,10 @@ import android.view.ViewGroup;
  return super.onInterceptTouchEvent(ev)
  就是 return false
  表示 不拦截
+
+
+ Activity中super.dispatchTouchEvent(ev) 然后return false事件仍然照常传递
+
  */
 
 
