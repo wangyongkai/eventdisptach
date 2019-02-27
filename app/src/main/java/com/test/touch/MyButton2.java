@@ -50,7 +50,7 @@ public class MyButton2 extends Button {
         }
         boolean flag = super.onTouchEvent(event);
         Log.v(TAG, "flag=" + flag + "  onTouchEvent after  super.onTouchEvent(event)");
-        return true;
+        return flag;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

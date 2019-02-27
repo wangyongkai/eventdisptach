@@ -89,6 +89,15 @@ import android.view.ViewGroup;
  * 件。会直接调用activity的onTouchEvent去消耗事件
  * <p>
  * 6.view的dispatchTouchEvent如果返回一个false 表明自己不消耗事件 即使自己的子view想消耗也不行！！！！！！
+ *
+ *
+ * 7.如果该消耗事件的view没有消耗事件，那么则交给他的父view消耗。
+ *
+ *
+ * 8.super.dispatchTouchEvent(ev)两个功能：将事件分发给子类和调用本层的onInterceptTouchEvent。如果不用super则这两个功能无法实现。
+ *
+ *
+ * 9.super.onTouchEvent(event)的功能是 onclick方法实现。
  */
 
 
